@@ -7,16 +7,14 @@ public class MainMenu : MonoBehaviour
 {
     public InputHandler handler;
     public Text currentUser;
-    public Profile profile;
     public Button NewGame;
     public Button LoadGame;
 
     private void Awake()
     {
-        if (ProfileManager.FindProfile(ProfileSingleton.instance.profileId) != null)
+        if (CurrentProfile.Instance != null)
         {
-            profile = ProfileManager.FindProfile(ProfileSingleton.instance.profileId);
-            currentUser.text = profile.username;
+            currentUser.text = CurrentProfile.Instance.username;
             NewGame.interactable = true;
             LoadGame.interactable = true;
             NewGame.GetComponentInChildren<Text>().color = Color.white;
@@ -32,12 +30,16 @@ public class MainMenu : MonoBehaviour
 
    public void ProfileMenuButton ()
     {
-        SceneManager.LoadScene("ProfilesMenu");
+        SceneManager.LoadScene("ProfileMenu");
     }
 
     public void PlayButton ()
     {
         SceneManager.LoadScene("Game");
+    }
+    public void OptionsButton ()
+    {
+        SceneManager.LoadScene("OptionsMenu");
     }
     public void LoadButton ()
     {
@@ -46,11 +48,6 @@ public class MainMenu : MonoBehaviour
     public void AchButton ()
     {
         SceneManager.LoadScene("Achievements");
-    }
-
-    public void BackButton ()
-    {
-        SceneManager.LoadScene("MainMenu");
     }
 
     public void QuitGame ()

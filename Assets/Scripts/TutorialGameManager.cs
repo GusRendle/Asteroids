@@ -41,7 +41,7 @@ public class TutorialGameManager : MonoBehaviour{
 
 
     public void NewGame(){
-        this.player.gameObject.layer = LayerMask.NameToLayer("Respawn");
+        this.player.gameObject.layer = LayerMask.NameToLayer("Invincible");
 
         mainText.gameObject.SetActive(false);
         upControl.SetActive(true);
@@ -50,11 +50,11 @@ public class TutorialGameManager : MonoBehaviour{
         rightControl.SetActive(false);
         
 
-        upControl.transform.Find("Text").GetComponent<Text>().text = ProfileSingleton.instance.up;
-        backControl.transform.Find("Text").GetComponent<Text>().text = ProfileSingleton.instance.back;
-        leftControl.transform.Find("Text").GetComponent<Text>().text = ProfileSingleton.instance.left;
-        rightControl.transform.Find("Text").GetComponent<Text>().text = ProfileSingleton.instance.right;
-        shootControl.transform.Find("Text").GetComponent<Text>().text = ProfileSingleton.instance.shoot;
+        upControl.transform.Find("Text").GetComponent<Text>().text = CurrentProfile.Instance.thrustKey.ToString();
+        backControl.transform.Find("Text").GetComponent<Text>().text = CurrentProfile.Instance.backKey.ToString();
+        leftControl.transform.Find("Text").GetComponent<Text>().text = CurrentProfile.Instance.leftKey.ToString();
+        rightControl.transform.Find("Text").GetComponent<Text>().text = CurrentProfile.Instance.rightKey.ToString();
+        shootControl.transform.Find("Text").GetComponent<Text>().text = CurrentProfile.Instance.shootKey.ToString();
 
 
     }
@@ -71,15 +71,15 @@ public class TutorialGameManager : MonoBehaviour{
     private void FixedUpdate() {
         if(Input.GetKeyDown(KeyCode.Return)) Pause();
         if(upControl.gameObject.active){
-            if(Input.GetKey(ProfileSingleton.instance.up)) AddProgress(upImage, upControl);
+            if(Input.GetKey(CurrentProfile.Instance.thrustKey.ToString())) AddProgress(upImage, upControl);
         }else if(backControl.gameObject.active){
-            if(Input.GetKey(ProfileSingleton.instance.back)) AddProgress(backImage, backControl);
+            if(Input.GetKey(CurrentProfile.Instance.backKey.ToString())) AddProgress(backImage, backControl);
         }else if(leftControl.gameObject.active){
-            if(Input.GetKey(ProfileSingleton.instance.left)) AddProgress(leftImage, leftControl);
+            if(Input.GetKey(CurrentProfile.Instance.leftKey.ToString())) AddProgress(leftImage, leftControl);
         }else if(rightControl.gameObject.active){
-            if(Input.GetKey(ProfileSingleton.instance.right)) AddProgress(rightImage, rightControl);
+            if(Input.GetKey(CurrentProfile.Instance.rightKey.ToString())) AddProgress(rightImage, rightControl);
         }else if(shootControl.gameObject.active){
-            if(Input.GetKey(ProfileSingleton.instance.shoot)) AddProgress(shootImage, shootControl);
+            if(Input.GetKey(CurrentProfile.Instance.shootKey.ToString())) AddProgress(shootImage, shootControl);
         }
 
         if(resistance){
@@ -98,19 +98,19 @@ public class TutorialGameManager : MonoBehaviour{
         resistance = true;
         switch(direction){
             case 1:
-                mainText.text = "press "+ProfileSingleton.instance.back;
+                mainText.text = "press "+CurrentProfile.Instance.backKey.ToString();
                 backControl.SetActive(true);
                 break;
             case 2:
-                mainText.text = "press "+ProfileSingleton.instance.left;
+                mainText.text = "press "+CurrentProfile.Instance.leftKey.ToString();
                 leftControl.SetActive(true);
                 break;
             case 3:
-                mainText.text = "press "+ProfileSingleton.instance.right;
+                mainText.text = "press "+CurrentProfile.Instance.rightKey.ToString();
                 rightControl.SetActive(true);
                 break;
             case 4:
-                mainText.text = "press "+ProfileSingleton.instance.shoot;
+                mainText.text = "press "+CurrentProfile.Instance.shootKey.ToString();
                 shootControl.SetActive(true);
                 break;
             case 5:
@@ -144,12 +144,10 @@ public class TutorialGameManager : MonoBehaviour{
     }
 
     public void TutorialOver(){
-        Profile profile = ProfileManager.FindProfile(ProfileSingleton.instance.profileId);
-        profile.newPlayer = false;
-        ProfileManager.SaveProfile(profile);
-        ProfileSingleton.instance.newPlayer = false;
-        SceneManager.LoadScene("Game");
-
+        CurrentProfile.Instance.newPlayer = false;
+        CurrentProfile.Instance.updateProfileFile();
+        ProfileManager.SaveProfiles();
+        SceneManager.LoadScene("MainMenu");
     }
 
 

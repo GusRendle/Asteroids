@@ -15,6 +15,6 @@ public class MoveBackCommand: Command{
     //the force is calculated as direction (Vector3) * speed (specified in the player class)
     public override void Execute()
     {
-        currentPlayer.GetComponent<Rigidbody2D>().AddForce(-(currentPlayer.transform.up) * currentPlayer.thrustSpeed);
+        currentPlayer.GetComponent<Rigidbody2D>().AddForce(-currentPlayer.transform.up * currentPlayer.thrustSpeed);
     }
 }

@@ -3,7 +3,13 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Asteroid
+  - Bullet
+  - PowerUp
+  - Keybind
+  - Achievement
+  - ProfilesPanel
   layers:
   - Default
   - TransparentFX
@@ -11,11 +17,11 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - Bullets
+  - Asteroids
+  - PowerUps
+  - Invincible
   - 
   - 
   - 

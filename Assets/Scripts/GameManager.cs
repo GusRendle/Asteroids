@@ -35,7 +35,18 @@ public class GameManager : MonoBehaviour {
 
 
     private void Start() {
-        NewGame();
+        // if(CurrentProfile.Instance.newPlayer){
+        //     SceneManager.LoadScene("Tutorial");
+        // }
+        ClearAsteroids();
+        ClearPowerUps();
+
+        gameOverUI.SetActive(false);
+        gamePausedUI.SetActive(false);
+
+        SetScore(0);
+        SetLives(1);
+        Respawn();
     }
 
     private void Update() {
@@ -83,7 +94,7 @@ public class GameManager : MonoBehaviour {
         //Re-activate the player game object
         this.player.gameObject.SetActive(true);
         //Change the layer of the player object to Respawn which will ignore all collisions
-        this.player.gameObject.layer = LayerMask.NameToLayer("Respawn");
+        this.player.gameObject.layer = LayerMask.NameToLayer("Invincible");
         //After 3 seconds turn on collisions
         Invoke(nameof(TurnOnCollisions), this.respawnInvisibility);
     }
@@ -97,12 +108,10 @@ public class GameManager : MonoBehaviour {
     //Enable the Game Over UI
     private void GameOver()
     {
-        Profile profile = ProfileManager.FindProfile(ProfileSingleton.instance.profileId);
-
-        if(profile.score < score) profile.score = score;
-        if(profile.newPlayer) profile.newPlayer = false;
-        ProfileSingleton.instance.newPlayer = false;
-        ProfileManager.SaveProfile(profile);
+        if(CurrentProfile.Instance.score < score) CurrentProfile.Instance.score = score;
+        if(CurrentProfile.Instance.newPlayer) CurrentProfile.Instance.newPlayer = false;
+        CurrentProfile.Instance.updateProfileFile();
+        ProfileManager.SaveProfiles();
         gameOverUI.SetActive(true);
     }
 
@@ -146,28 +155,9 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    public void NewGame()
-    {
-        Profile profile = ProfileManager.FindProfile(ProfileSingleton.instance.profileId);
-
-        if(profile.newPlayer){
-            SceneManager.LoadScene("Tutorial");
-        }
-        ClearAsteroids();
-        ClearPowerUps();
-
-        gameOverUI.SetActive(false);
-        gamePausedUI.SetActive(false);
-
-        SetScore(0);
-        SetLives(1);
-        Respawn();
-    }
-
-
     public void SaveGame(){
         Asteroid[] asteroids = FindObjectsOfType<Asteroid>();
-        SaveSystem.SaveGame(asteroids, this, player, ProfileSingleton.instance.profileId);
+        SaveSystem.SaveGame(asteroids, this, player, CurrentProfile.Instance.profileId);
     }
     
 
@@ -175,7 +165,7 @@ public class GameManager : MonoBehaviour {
         //Unpause the game
         Pause();
         //Load Player
-        GameSave saveFile = SaveSystem.LoadGame(ProfileSingleton.instance.profileId);
+        GameSave saveFile = SaveSystem.LoadGame(CurrentProfile.Instance.profileId);
         PlayerData data = saveFile.playerData;
 
         SetLives(data.lives);

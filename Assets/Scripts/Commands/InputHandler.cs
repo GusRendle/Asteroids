@@ -6,72 +6,69 @@ using UnityEngine.SceneManagement;
 
 public class InputHandler : MonoBehaviour{
     
-    private bool movingForward;
-    private bool movingBack;
-    private bool turningLeft;
-    private bool turningRight;
-    private bool shooting;
+    private bool isMovingForward;
+    private bool isReversing;
+    private bool isTurningLeft;
+    private bool isTurningRight;
+    private bool isShooting;
 
-    private MoveBackCommand back;
-    private MoveForwardCommand forward;
-    private TurnLeftCommand turnLeft;
-    private TurnRightCommand turnRight;
+    private MoveBackCommand backCmd;
+    private MoveForwardCommand thrustCmd;
+    private TurnLeftCommand leftCmd;
+    private TurnRightCommand rightCmd;
+    private ShootCommand shootCmd;
 
-    private ShootCommand shoot;
-
-    private int progress=0;
-
-
-
-    public string inputForward = "w";
-    public string inputBack = "s";
-    public string inputLeft = "a";
-    public string inputRight = "d";
-    public string inputShoot = "space";
+    public KeyCode thrustInput;
+    public KeyCode reverseInput;
+    public KeyCode leftInput;
+    public KeyCode rightInput;
+    public KeyCode shootInput;
 
     private void Start() {
+        Player player = gameObject.GetComponent<Player>();
+        backCmd = new MoveBackCommand(player);
+        thrustCmd = new MoveForwardCommand(player);
+        leftCmd = new TurnLeftCommand(player);
+        rightCmd = new TurnRightCommand(player);
+        shootCmd = new ShootCommand(player);
 
-        back = new MoveBackCommand(this.gameObject.GetComponent<Player>());
-        forward = new MoveForwardCommand(this.gameObject.GetComponent<Player>());
-        turnLeft = new TurnLeftCommand(this.gameObject.GetComponent<Player>());
-        turnRight = new TurnRightCommand(this.gameObject.GetComponent<Player>());
-        shoot = new ShootCommand(this.gameObject.GetComponent<Player>());
-    }
-    public void AssignCommand(string inputForward, string inputBack, string inputLeft, string inputRight, string inputShoot){
-        this.inputForward = inputForward;
-        ProfileSingleton.instance.up = inputForward;
-        this.inputBack = inputBack;
-        ProfileSingleton.instance.back = inputBack;
-        this.inputLeft = inputLeft;
-        ProfileSingleton.instance.left = inputLeft;
-        this.inputRight = inputRight;
-        ProfileSingleton.instance.right = inputRight;
-        this.inputShoot = inputShoot;
-        ProfileSingleton.instance.shoot = inputShoot;
+        // KeybindManager keybindManager = FindObjectOfType<KeybindManager>();
+        // if (CurrentProfile.Instance.thrustKey == KeyCode.None) {
+        //     keybindManager.DefaultKeys();
+        // } else {
+        //     keybindManager.BindKey("UP", CurrentProfile.Instance.thrustKey);
+        //     keybindManager.BindKey("DOWN", CurrentProfile.Instance.backKey);
+        //     keybindManager.BindKey("LEFT", CurrentProfile.Instance.leftKey);
+        //     keybindManager.BindKey("RIGHT", CurrentProfile.Instance.rightKey);
+        //     keybindManager.BindKey("SHOOT", CurrentProfile.Instance.shootKey);
+        // }
+
+        SetKeys();
     }
 
+    private void SetKeys() {
+        thrustInput = CurrentProfile.Instance.thrustKey;
+        reverseInput = CurrentProfile.Instance.backKey;
+        leftInput = CurrentProfile.Instance.leftKey;
+        rightInput = CurrentProfile.Instance.rightKey;
+        shootInput = CurrentProfile.Instance.shootKey;
+    }
 
     void Update()
     {
-        movingForward = (Input.GetKey(inputForward)); 
-        movingBack = (Input.GetKey(inputBack)); 
-        turningLeft = (Input.GetKey(inputLeft)); 
-        turningRight = (Input.GetKey(inputRight)); 
-        if (Input.GetKeyDown(inputShoot)) shoot.Execute();
+        isMovingForward = Input.GetKey(thrustInput); 
+        isReversing = Input.GetKey(reverseInput); 
+        isTurningLeft = Input.GetKey(leftInput); 
+        isTurningRight = Input.GetKey(rightInput); 
+
+        if (Input.GetKeyDown(shootInput)) shootCmd.Execute();
         
     }
-    public int GetProgress(int progress, string direction){
-        if(direction.Equals("up")){
-            if(movingForward) progress++;
-        }
-        return progress;
-    }
-    private void FixedUpdate() {
-        Profile profile = ProfileManager.FindProfile(ProfileSingleton.instance.profileId);
 
-        if (movingForward) forward.Execute();
-        if (movingBack) back.Execute();
-        if (turningLeft) turnLeft.Execute();
-        if (turningRight) turnRight.Execute();
+    private void FixedUpdate() {
+        if (isMovingForward) thrustCmd.Execute();
+        if (isReversing) backCmd.Execute();
+        if (isTurningLeft) leftCmd.Execute();
+        if (isTurningRight) rightCmd.Execute();
     }
 }

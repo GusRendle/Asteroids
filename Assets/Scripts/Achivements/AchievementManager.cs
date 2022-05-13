@@ -41,16 +41,8 @@ public class AchievementManager : MonoBehaviour
         return result;
     }
 
-    private void Start()
+    private void Awake()
     {
-        InitializeAchievements();
-    }
-
-    private void InitializeAchievements()
-    {
-        if (achievements != null)
-            return;
-
         achievements = new List<Achievement>();
         achievements.Add(new Achievement(sprites[0], "Full of Life", "Have 5 lives", (object o) => lives >= 5));
         achievements.Add(new Achievement(sprites[1], "Like a cat", "Have 9 lives", (object o) => lives >= 9));
@@ -64,14 +56,27 @@ public class AchievementManager : MonoBehaviour
         achievements.Add(new Achievement(sprites[9], "Mega manoeuvrability", "Find a turn boost power-up", (object o) => hasTurn > 0));
         achievements.Add(new Achievement(sprites[10], "Can't touch this", "Find an invincibility power-up", (object o) => hasInvincible > 0));
         achievements.Add(new Achievement(sprites[11], "Living god", "Have all effects active at once", (object o) => hasAll == 20));
+
+        if (CurrentProfile.Instance.achievements.Length == 12) {
+            for (int i = 0; i < 12; i++)
+            {
+                if (CurrentProfile.Instance.achievements[i] == true)
+                {
+                    achievements[i].achieved = true;
+                }
+            }
+        }
     }
 
     private void Update()
     {
         GameManager gameManager = FindObjectOfType<GameManager>();
         Player player = FindObjectOfType<Player>();
-        lives = gameManager.lives;
-        score = gameManager.score;
+        if (gameManager != null) {
+            lives = gameManager.lives;
+            score = gameManager.score;
+        }
+
         if (player != null) {
             playerSpeed = player.rigidBody.velocity.magnitude;
             if (player.speedInc != null) {
@@ -117,7 +122,13 @@ public class AchievementManager : MonoBehaviour
                 achObj.descString = achievement.description;
                 achObj.image.overrideSprite = achievement.img;
                 Destroy(achObj.gameObject, 10f);
+                SaveAchievementData(achievement);
             }
         }
+    }
+    private void SaveAchievementData(Achievement achievement) {
+        int index = achievements.FindIndex(a => a == achievement);
+        CurrentProfile.Instance.achievements[index] = true;
+        CurrentProfile.Instance.updateProfileFile();
     }
 }

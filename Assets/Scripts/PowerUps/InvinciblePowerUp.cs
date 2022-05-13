@@ -14,7 +14,7 @@ public class InvinciblePowerUp : PowerUpEffect
             player.GetComponent<Player>().StopCoroutine(player.GetComponent<Player>().invincible);
             player.GetComponent<Player>().invincible = player.GetComponent<Player>().StartCoroutine(LimitedEffect(player));
         } else {
-            player.gameObject.layer = LayerMask.NameToLayer("Respawn");
+            player.gameObject.layer = LayerMask.NameToLayer("Invincible");
             player.GetComponent<Player>().invincible = player.GetComponent<Player>().StartCoroutine(LimitedEffect(player));
         }
     }

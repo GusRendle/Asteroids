@@ -7,7 +7,7 @@ using System.Xml;
 public static class SaveSystem{
 
     public static void SaveGame(Asteroid [] asteroids, GameManager manager,  Player player, string profileId){
-        BinaryFormatter formatter = new BinaryFormatter();
+        BinaryFormatter binaryFormatter = new BinaryFormatter();
         string path = Application.persistentDataPath + "/" + profileId + ".fun";
         FileStream stream = new FileStream(path, FileMode.Create);
 
@@ -20,38 +20,38 @@ public static class SaveSystem{
         }
         Asteroids asteroidsList = new Asteroids(asteroidsDataList);
         GameSave game = new GameSave(asteroidsList, playerData);
-        formatter.Serialize(stream, game);
+        binaryFormatter.Serialize(stream, game);
         stream.Close();
     }
 
     public static void SaveProfiles(Profile[] profiles){
-        BinaryFormatter formatter = new BinaryFormatter();
+        BinaryFormatter binaryFormatter = new BinaryFormatter();
         string path = Application.persistentDataPath + "/profiles.fun";
         FileStream stream = new FileStream(path, FileMode.Create);
-        ProfilesData profilesList = new ProfilesData(profiles);
+        ProfilesList profilesList = new ProfilesList(profiles);
 
-        formatter.Serialize(stream, profilesList);
+        binaryFormatter.Serialize(stream, profilesList);
         stream.Close();
 
     }
 
-    public static ProfilesData LoadProfiles(){
+    public static ProfilesList LoadProfiles(){
         string path = Application.persistentDataPath + "/profiles.fun";
         if(File.Exists(path)){
             //open the binary formatter
-            BinaryFormatter formatter = new BinaryFormatter();
+            BinaryFormatter binaryFormatter = new BinaryFormatter();
             //open the file stream on already existing save file
             FileStream stream = new FileStream(path, FileMode.Open);
 
             //read from the stream, change it to readable format and save it 
-            ProfilesData data = formatter.Deserialize(stream) as ProfilesData;
+            ProfilesList data = binaryFormatter.Deserialize(stream) as ProfilesList;
             stream.Close();
             //Return the data in the readable format
             return data;
         }else{
            //Log error
            Debug.LogError("Save file not found in"+path); 
-           return new ProfilesData(new Profile[] {});
+           return new ProfilesList();
         }
 
     }
@@ -60,12 +60,12 @@ public static class SaveSystem{
         string path = Application.persistentDataPath + "/"+ profileId + ".fun";
         if(File.Exists(path)){
             //open the binary formatter
-            BinaryFormatter formatter = new BinaryFormatter();
+            BinaryFormatter binaryFormatter = new BinaryFormatter();
             //open the file stream on already existing save file
             FileStream stream = new FileStream(path, FileMode.Open);
 
             //read from the stream, change it to readable format and save it 
-            GameSave data = formatter.Deserialize(stream) as GameSave;
+            GameSave data = binaryFormatter.Deserialize(stream) as GameSave;
             stream.Close();
             //Return the data in the readable format
             return data;

@@ -7,7 +7,6 @@ public class TurnLeftCommand: Command{
     //Player
     private Player currentPlayer;
     //Rigid body of the player (physical object)
-    private Rigidbody2D playerBody;
     //Set direction to left
     float turnDirection = 1.0f;
 

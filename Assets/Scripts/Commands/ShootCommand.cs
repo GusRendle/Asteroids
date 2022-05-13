@@ -10,7 +10,8 @@ public class ShootCommand: Command{
     //Project the bullet in the upwards direction of the passed entity
     public override void Execute()
     {
-        if (player.GetComponent<Player>().tripleShot != null)
+        Player cmnp = player.GetComponent<Player>();
+        if (cmnp.tripleShot != null)
         {
             Bullet bulletOne = Instantiate(player.bulletPrefab, player.transform.position, player.transform.rotation);
             bulletOne.Project(entity.transform.up);         

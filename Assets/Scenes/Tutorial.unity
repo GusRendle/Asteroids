@@ -273,6 +273,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccd399deba740da42bbc4cadae069bb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rigidBody: {fileID: 0}
   bulletPrefab: {fileID: 305771468646689845, guid: 1bb2ec6c2fde5cf4b88dba76add59a0f, type: 3}
   thrustSpeed: 20
   turnSpeed: 400
@@ -288,11 +289,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd0f5ae9a47727e498c1209601bbe02c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputForward: w
-  inputBack: s
-  inputLeft: a
-  inputRight: d
-  inputShoot: space
+  thrustInput: 0
+  reverseInput: 0
+  leftInput: 0
+  rightInput: 0
+  shootInput: 0
 --- !u!61 &214110855
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -638,8 +639,36 @@ PrefabInstance:
       propertyPath: m_Name
       value: ProfileSingleton
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7441775736189095062, guid: 084ea51a637333145a460d377ae8c0a0, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 084ea51a637333145a460d377ae8c0a0, type: 3}
+--- !u!1 &427687953 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7441775736189095063, guid: 084ea51a637333145a460d377ae8c0a0, type: 3}
+  m_PrefabInstance: {fileID: 427687952}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &427687954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 427687953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18a58fa46e410dc418cc313e211f34e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  profileId: 
+  username: 
+  achievements: 0000000000000000000000
+  newPlayer: 1
+  score: 0
+  thrustKey: 119
+  leftKey: 97
+  rightKey: 100
+  backKey: 115
+  shootKey: 32
 --- !u!1 &528641169
 GameObject:
   m_ObjectHideFlags: 0
