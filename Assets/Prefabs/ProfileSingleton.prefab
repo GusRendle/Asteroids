@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7441775736189095061}
-  - component: {fileID: 7441775736189095062}
+  - component: {fileID: 7117900846212137698}
   m_Layer: 0
   m_Name: ProfileSingleton
   m_TagString: Untagged
@@ -31,7 +31,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7441775736189095062
+--- !u!114 &7117900846212137698
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,6 +40,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 7441775736189095063}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d29e891167745f845a922525bfdcdcc5, type: 3}
+  m_Script: {fileID: 11500000, guid: 18a58fa46e410dc418cc313e211f34e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  profileId: 
+  username: 
+  achievements: 0000000000000000000000
+  newPlayer: 1
+  score: 0
+  thrustKey: 119
+  leftKey: 97
+  rightKey: 100
+  backKey: 115
+  shootKey: 32

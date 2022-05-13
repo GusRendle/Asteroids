@@ -31,19 +31,26 @@ public class InputHandler : MonoBehaviour{
         leftCmd = new TurnLeftCommand(player);
         rightCmd = new TurnRightCommand(player);
         shootCmd = new ShootCommand(player);
-
-        // KeybindManager keybindManager = FindObjectOfType<KeybindManager>();
-        // if (CurrentProfile.Instance.thrustKey == KeyCode.None) {
-        //     keybindManager.DefaultKeys();
-        // } else {
-        //     keybindManager.BindKey("UP", CurrentProfile.Instance.thrustKey);
-        //     keybindManager.BindKey("DOWN", CurrentProfile.Instance.backKey);
-        //     keybindManager.BindKey("LEFT", CurrentProfile.Instance.leftKey);
-        //     keybindManager.BindKey("RIGHT", CurrentProfile.Instance.rightKey);
-        //     keybindManager.BindKey("SHOOT", CurrentProfile.Instance.shootKey);
-        // }
-
         SetKeys();
+    }
+
+    void Update()
+    {
+        if (gameObject.GetComponent<Player>() != null) {
+            isMovingForward = Input.GetKey(thrustInput); 
+            isReversing = Input.GetKey(reverseInput); 
+            isTurningLeft = Input.GetKey(leftInput); 
+            isTurningRight = Input.GetKey(rightInput); 
+            if (Input.GetKeyDown(shootInput)) shootCmd.Execute();
+        }
+    }
+    private void FixedUpdate() {
+            if (gameObject.GetComponent<Player>() != null) {
+            if (isMovingForward) thrustCmd.Execute();
+            if (isReversing) backCmd.Execute();
+            if (isTurningLeft) leftCmd.Execute();
+            if (isTurningRight) rightCmd.Execute();
+        }
     }
 
     private void SetKeys() {
@@ -54,21 +61,4 @@ public class InputHandler : MonoBehaviour{
         shootInput = CurrentProfile.Instance.shootKey;
     }
 
-    void Update()
-    {
-        isMovingForward = Input.GetKey(thrustInput); 
-        isReversing = Input.GetKey(reverseInput); 
-        isTurningLeft = Input.GetKey(leftInput); 
-        isTurningRight = Input.GetKey(rightInput); 
-
-        if (Input.GetKeyDown(shootInput)) shootCmd.Execute();
-        
-    }
-
-    private void FixedUpdate() {
-        if (isMovingForward) thrustCmd.Execute();
-        if (isReversing) backCmd.Execute();
-        if (isTurningLeft) leftCmd.Execute();
-        if (isTurningRight) rightCmd.Execute();
-    }
 }

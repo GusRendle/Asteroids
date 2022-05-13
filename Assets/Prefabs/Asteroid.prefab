@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7946354536070838377}
   - component: {fileID: 7946354536070838376}
   - component: {fileID: 7946354536070838359}
-  - component: {fileID: -9160010751467296399}
+  - component: {fileID: 49104713075814070}
   m_Layer: 8
   m_Name: Asteroid
   m_TagString: Asteroid
@@ -132,7 +132,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &-9160010751467296399
+--- !u!114 &49104713075814070
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -141,18 +141,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 7946354536070838358}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64f45e9e36791a844b4beedc5e773162, type: 3}
+  m_Script: {fileID: 11500000, guid: 90cc7ef0c054dba4fbae6278bf2878b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprites:
-  - {fileID: 21300000, guid: 34c22454d67761e4bb5eede3ba29123c, type: 3}
-  - {fileID: 21300000, guid: da1e750b6be44ac4f8759ac9a1e40191, type: 3}
-  - {fileID: 21300000, guid: 981203dae2c82084b8e93f19d0cf16bd, type: 3}
-  - {fileID: 21300000, guid: 1f421be4ab96e8047b00df2bd7fbea48, type: 3}
-  powerUpSprite:
-  - {fileID: 21300000, guid: 34bff0c117c427d499b83d3e204e5e8e, type: 3}
-  - {fileID: 21300000, guid: 7d7c4fa383c36cf468796cce2c391a04, type: 3}
-  powerUpPre: {fileID: -3343503869530713310, guid: a9517e9dbfc9f4c47b98cae60c6023bc, type: 3}
+  sprites: []
+  powerUpPre: {fileID: 0}
   size: 100
   sprite: 1
   minSize: 50

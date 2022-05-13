@@ -2,12 +2,9 @@ using UnityEngine;
 public class ShootCommand: Command{
 
     private Player player;
-
-    //Pass the entity to the base class
     public ShootCommand(Player entity) : base(entity){
         player = entity;
     }
-    //Project the bullet in the upwards direction of the passed entity
     public override void Execute()
     {
         Player cmnp = player.GetComponent<Player>();

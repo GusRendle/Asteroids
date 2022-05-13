@@ -15,7 +15,6 @@ public class AchObj : MonoBehaviour
     {
         title.text = titleString;
         description.text = descString;
-        //spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
 }
